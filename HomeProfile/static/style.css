@@ -1,0 +1,123 @@
+
+
+a:hover{
+    text-decoration: none;
+}
+
+.section{
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+.section h2.section-head{
+    color: #000;
+    text-align: center;
+    margin-bottom: 40px;
+
+}
+.section h2.section-head:after{
+    background:black ;
+    content:"";
+    display: block;
+    width: 100px;
+    height: 3px;
+    margin: 20px auto;
+}
+
+#header{
+    color: salmon;
+    background: tomato;
+}
+#logo{
+    font-size: 2rem;
+    margin-top: 5px;
+    color: #fff;
+}
+
+#menu{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#menu a{
+     display: inline-block;
+     list-style:armenian;
+
+    padding: 15px 10px ;
+    display: block;
+    text-decoration: none;
+}
+#menu a:hover{
+    background: #c0392b;
+}
+#menu Button:hover{
+    background: #c0392b;
+    color: #fff;
+
+}
+
+ #menu a{
+            margin-right:2px;
+            margin-left:2px;
+            background-color: rgb(221, 41, 215);
+        }
+ #menu button{
+              background-color: rgb(221, 41, 215);
+        }
+               #menu-btn {
+            background-color: rgb(236, 156, 131, 0.6);
+
+        }
+        #menu-btn a:hover{
+            background-color: rgb(241, 68, 213);
+        }
+
+
+#banner-title h1{
+    background: rgba(255, 255, 255, 0.8);
+    display: inline-block;
+
+    margin: 0;
+}
+
+#banner-title p.lead{
+    color: #fff;
+    background: rgba(231,76,60,0.7);
+
+}
+
+.cardBar a:hover{
+ background: rgb(241, 68, 213);
+ color:honeydew;
+}
+
+a.readmore{
+    font-size: 14px;
+    color: #c0392b;
+}
+a.readmore:after{
+    content: "\f101";
+    font-family: fontAwesone;
+    padding-left: 5px;
+}
+
+@media (max-width: 768px){
+
+    .section{
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    #logo{
+        text-align: center;
+        margin: 10px 0;
+    }
+    #menu{
+        text-align: center;
+    }
+}
+
+#footer{
+  background-color: rgb(59, 3, 10);
+  height:50px;
+}

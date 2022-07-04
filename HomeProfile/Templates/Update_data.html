@@ -1,0 +1,38 @@
+{% extends 'Base_file.html' %}
+{% block title %} Update {% endblock title %}
+{% block body %}
+<!--<h1 style="font-family:Calibri; text-align:center; font-weiht:bold;">Update Student</h1>-->
+<div class="container">
+
+<!-- form variable -->  
+<table class="table table-primary table-striped">  
+<thead>
+    <tr>      
+      <th scope="col">Book ID</th>
+      <th scope="col">Book TitleName</th>
+      <th scope="col">Author Name</th>
+      <th scope="col">Catergory</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Action</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+       <form method="post" action="" class="d-inline">
+      {% csrf_token %}
+      <td>{{form.Book_Id}} </td>
+      <td>{{form.Book_Title}}</td>
+      <td>{{form.Author_Name}}</td>
+      <td>{{form.Catergory}}</td>
+      <td>{{form.Quantity}}</td>
+      <td>
+      <input type="submit" class="btn btn-light" value="Submit" >
+      </td>
+         </form>
+    </tr>
+    </tbody>
+</table >
+<a href="" class="btn p-2 mt-1 btn-primary">Retrive Details</a>
+</div> 
+{% endblock body %}

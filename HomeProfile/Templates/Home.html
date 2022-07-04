@@ -1,0 +1,325 @@
+{% extends 'Base_file.html' %}
+
+{% block title %} Home {% endblock title %}
+
+{% block body %}
+
+{% if messages %} {% for message in messages %}
+{% if message.tags %}
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+    <strong> {{message}} </strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+{% endfor %} {% endif %}
+
+      <div class="row text-light">
+            {% if user.is_authenticated %}
+            <div class="btn-group" id="menu-btn">
+                <a href="#" class="btn btn-danger btn-lg active" aria-current="page">Home</a>
+                <a href="addbook" class="btn btn-lg">Add Books</a>
+                <a href="issuebook" class="btn btn-lg">Issue Book</a>
+                <a href="Student_section/RegisterStudent" class="btn btn-lg">Register New Member</a>
+
+                <a type="button" data-bs-toggle="modal"
+                data-bs-target="#Profilemodal"  class="btn btn-lg"> Member Login </a>
+                <a id="showDrop1" type="button" class="btn btn-lg dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Show Records
+                </a>
+                        <ul class="dropdown-menu" aria-labelledby="showDrop1">
+                            <li><a class="dropdown-item" href="viewissue">Show Issued Books</a></li><hr class="m-1">
+                            <li><a class="dropdown-item" href="viewbook">Show Book Records </a></li><hr class="m-1">
+                            <li><a class="dropdown-item" href="Student_section/ViewMember">Show Member Records</a></li>
+                        </ul>
+                <a id="UserDrop1" type="button" class="btn btn-lg dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            User profile
+                </a>
+                         <ul class="dropdown-menu" aria-labelledby="UserDrop1">
+                            <li class="m-2">Name:-{{user.first_name}}__{{user.last_name}}</li>
+                            <li class="m-2">Contact Email:- {{user.email}}</li>
+                            <li class="m-2"><a  class="dropdown-item text-primary"href="userlogout">Logout</a></li>
+                         </ul>
+            </div>
+
+
+
+
+            <div class="row m-2 p-3">
+                <div class="col-3 p-2" >
+                    <div class="card" style="width: 15rem;">
+                    <img src="static/book1.jfif" class="card-img-top" alt="...">
+                    <a href="viewbook" class="btn cardBar" style="background-color: tomato;">Show Book Records</a>
+
+                    </div>
+
+                </div>
+                <div class="col-3">
+                    <div class="card" style="width: 15rem;">
+                    <img src="static/memberProfile.png" class="card-img-top" alt="...">
+                    <a href="#Profilemodal" class="btn " style="background-color: tomato" type="button" data-bs-toggle="modal"
+                data-bs-target="#Profilemodal" > Member Profile</a>
+
+                    </div>
+
+                </div>
+                <div class="col-3">
+                    <div class="card" style="width: 15rem;">
+                    <img src="static/showMember.jfif" class="card-img-top" alt="...">
+                    <a href="Student_section/ViewMember" class="btn " style="background-color: tomato;">Show Member Records</a>
+
+                    </div>
+
+                </div>
+                <div class="col-3">
+                    <div class="card" style="width: 15rem;">
+                    <img src="static/plan.jfif" class="card-img-top" alt="...">
+                    <a href="#plans" class="btn" style="background-color: tomato;" type="button" data-bs-toggle="modal" data-bs-target="#plans">
+                        MemberShip Plans</a>
+
+                    </div>
+
+                </div>
+                 <!-- Modal & Static & centered & scrollable-->
+    <div class="modal fade" id="plans" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+               <span class="fs-4 text-dark text-center my-3" style="border-bottom:2px solid Orange"> MemberShip Plans</span>
+                <div class="modal-body">
+
+
+
+
+
+                                <table class="table border shadow-lg">
+  <thead>
+    <tr>
+      <th scope="col">Plans<br>(charge)</th>
+      <th scope="col">Max No.of Books / Issue</th>
+      <th scope="col">Durations</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Rs.300</th>
+      <td>2 Books/ Issue</td>
+      <td> 1 Month</td>
+    </tr>
+    <tr>
+      <th scope="row">Rs.400</th>
+      <td>4 Books/ Issue</td>
+      <td> 1 Month</td>
+    </tr>
+    <tr>
+      <th scope="row">Rs.600</th>
+      <td>2 Books/ Issue</td>
+      <td> 3 Month</td>
+    </tr>
+    <tr>
+      <th scope="row">Rs.800</th>
+      <td>4 Books/ Issue</td>
+      <td> 3 Month</td>
+    </tr>
+    <tr>
+      <th scope="row">Rs.1000</th>
+      <td>2 Books/ Issue</td>
+      <td> 6 Month</td>
+    </tr>
+    <tr>
+      <th scope="row">Rs.1400</th>
+      <td>4 Books/ Issue</td>
+      <td> 6 Month</td>
+    </tr>
+    <tr>
+      <th scope="row">Rs.1600</th>
+      <td>2 Books/ Issue</td>
+      <td> 1 year</td>
+    </tr>
+    <tr>
+      <th scope="row">Rs.2000</th>
+      <td>4 Books/ Issue</td>
+      <td> 1 year</td>
+    </tr>
+
+  </tbody>
+</table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-8 col-lg-6">
+                    <div id="banner-title" class="text-center p-1">
+                        <h1 style="background-color:rgb(187, 120, 44,0.6) ;"> MS_Library </h1>
+                        <p class="lead fs-3 fw-bold"> MS Book Management System.</p>
+                    </div>
+                </div>
+            </div>
+
+
+           <!-- Modal & Static & centered & scrollable-->
+    <div class="modal fade" id="Profilemodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: rgb(37, 20, 133); color:yellow ;">
+                    <h5 class="modal-title text-center border-bottom">Member Login Portal </h5>
+                    <button type="button" class="btn-close btn-outline-danger" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="Login-Form ">
+
+
+
+                                <form class="p-4 p-md-5 border rounded-3 bg-light bg-dark" method="post" action="Student_section/memberlogin">
+                                {% csrf_token %}
+
+                                    <h3>Please Sign-in </h3>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="mbname" name="member-username"
+                                            placeholder="name@example.com" required autofocus>
+                                        <label class="text-dark" for="mbname">Member Username</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="password" class="form-control" id="mbpass"
+                                            name="member-password" placeholder="Password" required>
+                                        <label class="text-dark" for="mbpass">Member Password</label>
+                                    </div>
+                                    <div class="checkbox mb-3">
+                                        <label>
+                                            <input type="checkbox" value="remember-me"> Remember me
+                                        </label>
+                                    </div>
+                                    <button class="w-100 btn btn-lg btn-primary" type="submit">Log In </button>
+                                    <hr class="my-4">
+                                    <small class="text-muted"> By clicking Sign up, you agree to the terms of
+                                        use.</small>
+                                </form>
+
+
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Back/Home</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+            {% else %}
+
+
+            <div class="row my-5">
+                <div class="col-md-8 col-lg-6">
+                    <div id="banner-title" class="text-center">
+                        <h1 style="background-color:rgb(187, 120, 44,0.6) ;"> MS_Library </h1>
+                        <p class="lead fs-3 fw-bold"> MS Book Management System.</p>
+                    </div>
+                </div>
+            </div>
+
+
+          <div style="height:150px;">  </div>
+
+          <div class="card text-center align-content-md-end" style="background-color: rgb(219, 149, 99,0.4);">
+
+            <div class="card-body ">
+                <h5 class="card-title" style="background-color: rgba(236, 211, 192, 0.4);">Administration Login</h5>
+                <h4 class="card-text text-center m-1 text-light"> For further processing .... Users Please Login here >>
+                <a type="button" data-bs-toggle="modal"
+                data-bs-target="#staticModal"  class="btn btn-lg btn-warning p-1 m-3"> User Login </a></h4>
+                <p class="card-text text-danger fw-semibold fs-5" style="background-color: rgba(236, 211, 192, 0.6);">
+                    Only Staff Members & Incharge can Access further Processing.</p>
+            </div>
+
+          </div>
+
+
+          {% endif %}
+      </div>
+
+<!-- Modal & Static & centered & scrollable-->
+    <div class="modal fade" id="staticModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title text-warning fs-3">Authentication User Login </h5>
+                    <button type="button" class="btn-close btn-outline-danger" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="Login-Form">
+                        <div class="row">
+
+                            <div class="col m-2">
+                                <form class="p-2 p-md-3 border rounded-3 bg-light" method="post" action="userlogin">
+                                {% csrf_token %}
+
+                                    <h3>Please Sign-in </h3>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control" id="floatingInput" name="username"
+                                            placeholder="name@example.com" required autofocus>
+                                        <label for="floatingInput">Username</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="password" class="form-control" id="floatingPassword"
+                                            name="password" placeholder="Password" required>
+                                        <label for="floatingPassword">Password</label>
+                                    </div>
+                                    <div class="checkbox mb-3">
+                                        <label>
+                                            <input type="checkbox" value="remember-me"> Remember me
+                                        </label>
+                                    </div>
+                                    <button class="w-100 btn btn-lg btn-primary" type="submit"> Sign-In </button>
+                                    <hr class="my-4">
+                                    <small class="text-muted">By clicking Sign up, you agree to the terms of
+                                        use.</small>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Back/Home</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock body %}
+
+
+
+
+
+
+
+
+
+
+

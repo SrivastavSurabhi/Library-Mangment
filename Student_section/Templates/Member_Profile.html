@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Member Profile </title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+
+
+</head>
+<body>
+
+<div class="row" style="background-color: rgb(230, 73, 73);">
+    <div class="col-4 mt-2 p-1 px-4 text-warning" style="border-right:2px solid red ;">
+        <p class="fs-4"> Mello Welcome..... {{member.Member_Name}}</p>
+    </div>
+    <div class="col-4 mt-2 " style="border-right:2px solid red ;">
+        <h3 class="border-bottom text-warning text-center"> Member Profile </h3>
+    </div>
+    <div class="col-4 mt-2 text-end">
+        <a class="btn btn-danger  border-warning" href="">Logout</a>
+    </div>
+</div>
+
+<div class="row m-5">
+    <div class="col-4" style="border:2px solid rgb(219, 184, 184) ;">
+        {% if member %}
+         <h5 class="text-center alert alert-success mt-2"> Member({{member.Member_IdNumber}}) Details </h5>
+         <table class="table table-hover bg-light mb-2 general table-bordered m-2">
+
+                    <tbody>
+                            <tr class="">
+                                 <td class="">Member Id_Number :-</td>
+                                 <td class="">{{member.Member_IdNumber}}</td>
+                            </tr>
+                            <tr class="">
+                                 <td class="">Member Name:- </td>
+                                 <td class="">{{member.Member_Name}}</td>
+                            </tr>
+                            <tr class="">
+                                 <td class="">Profession:- </td>
+                                 <td class=""> {{member.Profession}}</td>
+                            </tr>
+                            <tr class="">
+                                 <td class="">Email:-  </td>
+                                 <td class="">{{member.Email}}</td>
+                            </tr>
+                            <tr class="">
+                                 <td class="">Phone_No:- </td>
+                                 <td class="">{{member.Phone_No}}</td>
+                            </tr>
+                             <tr class="">
+                                 <td class="">Username:-   </td>
+                                 <td class="">{{member.Set_Username}}</td>
+                            </tr>
+                            <tr class="">
+                                 <td class="">Password:-   </td>
+                                <td><span id="pass" style="display:none;">{{member.Set_Password}}</span>
+                                    <span class="text-primary mx-2"  id="showpass"> ******** show </span></td>
+                            </tr>
+                            <tr class="">
+                                 <td class="">Membership_plan:- </td>
+                                 <td class=""> {{member.membership_plan}}</td>
+                            </tr>
+                    </tbody>
+
+         </table>
+
+                                <form action="{% url 'update' member.Member_IdNumber %}" method="post" class="d-inline"> {% csrf_token %}
+                                        <button class="btn btn-success btn-sm w-50 m-2" type="submit" value="update">Update</button>
+                                 </form>
+
+        {% endif %}
+    </div>
+    <div class="col-8">
+        <h5 class="alert text-center alert-warning fs-4"> Member({{member.Member_IdNumber}}) Currently Issued Books   </h5>
+
+{% if record %}
+<table class="table table-primary table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID Number</th>
+      <th scope="col">Member Name</th>
+      <th scope="col">Book Id</th>
+      <th scope="col">Book Title</th>
+      <th scope="col">Date Of Issuing</th>
+      <th scope="col">Date Of Expiring</th>
+      <th scope="col">Actions</th>
+
+    </tr>
+  </thead>
+  <tbody>
+
+    {% for i in record%}
+    <tr>
+
+      <td>{{i.Member_IdNumber}}</td>
+      <td>{{i.Member_Name}}</td>
+      <td>{{i.Book_Id}}</td>
+      <td>{{i.Book_Title}}</td>
+      <td>{{i.Issuedate}}</td>
+      <td>{{i.Expirydate}}</td>
+      <td>
+              <button type="button" value="Delete" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#return{{i.Member_IdNumber}}">
+                                          Return Status
+                                 </button>
+              <!-- Modal & Static & centered & scrollable-->
+        <div class="modal fade" id="return{{i.Member_IdNumber}}" data-bs-backdrop="static" data-bs-keyboard="false"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-content text-center">
+                    <div class="modal-header bg-danger">
+                        <h5 class="modal-title text-warning">Return Status:</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                                <p>Please Return Book Before Expiry Date Other wise Fine will Charged.... <br><br>
+                                    Book_Title: {{i.Book_Title}}  (Id: {{i.Book_Id}}) <br>
+                                               Last date for Book Return:
+                                 <span class="text-danger">{{i.Expirydate}}</span><br>
+                                No.of Days Remaining :- 5 days ....<br>
+                                Fine Charged:=<span class="text-primary">0.00</span></p>
+                                <hr>
+                        <button class="btn btn-success w-25" data-bs-dismiss="modal" aria-label="Close" >Back</button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<h1>No data</h1>
+{% endif %}
+
+</div>
+
+    </div>
+</div>
+<script>
+ $(document).ready(function(){
+         $('#showpass').click(function () {
+                 if ($(this).html() == "******** show") {
+
+                     $(this).html("hide");
+                     $('#pass').show();
+                 }
+                 else {
+
+                     $(this).html("******** show");
+                     $('#pass').hide();
+                 }
+             });
+          });
+</script>
+
+
+
+
+</body>
+</html>

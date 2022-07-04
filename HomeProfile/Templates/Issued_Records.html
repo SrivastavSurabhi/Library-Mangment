@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Issue Books </title>
+
+
+
+    <link rel="stylesheet" href="static/bootstrap.css">
+    <link rel="stylesheet" href="static/style.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script src="static/jquery.js"></script>
+</head>
+<body>
+
+<h1 class="text-center bg-warning">  Issued Book Records </h1>
+
+<div class="container border shadow-lg">
+    <div class="row justify-content-center m-2">
+       {% if messages %} {% for message in messages %}
+{% if message.tags %}
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+    <strong> {{message}} </strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+{% endfor %} {% endif %}
+
+        <div class="col-4">
+           <form method="get" action="/searchrecord" class="d-flex">
+        <input class="form-control me-2" type="search" name="searchrecord" id="searchrecord" placeholder="Search by Member name" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+       </div>
+       <div class="col-4 mx-2">
+           <a  class="btn btn-danger" href="/viewissue">View All Issued Records</a>
+       </div>
+
+   </div>
+{% if stu %}
+<table class="table table-primary table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID Number</th>
+      <th scope="col">Member Name</th>
+      <th scope="col">Book Id</th>
+      <th scope="col">Book Title</th>
+      <th scope="col">Date Of Issuing</th>
+      <th scope="col">Date Of Expiring</th>
+      <th scope="col">Actions</th>
+
+    </tr>
+  </thead>
+  <tbody>
+
+    {% for i in stu%}
+    <tr>
+
+      <td>{{i.Member_IdNumber}}</td>
+      <td>{{i.Member_Name}}</td>
+      <td>{{i.Book_Id}}</td>
+      <td>{{i.Book_Title}}</td>
+      <td>{{i.Issuedate}}</td>
+      <td>{{i.Expirydate}}</td>
+      <td>
+          <form action="{% url 'deleteissuebook' i.id %}" method="post" class="d-inline"> {% csrf_token %}
+
+
+              <button type="button" value="Delete" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#return{{i.Book_Id}}{{i.Member_IdNumber}}">
+                                          Return Status
+              </button>
+              <!-- Modal & Static & centered & scrollable-->
+        <div class="modal fade" id="return{{i.Book_Id}}{{i.Member_IdNumber}}" data-bs-backdrop="static" data-bs-keyboard="false"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger">
+                        <h5 class="modal-title text-warning">Return Status:</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                                <p>Please Return Book Before Expiry Date Other wise Fine will Charged.... <br><br>
+                                    Book_Title: {{i.Book_Title}}  (Id: {{i.Book_Id}}) <br>
+                                               Last date for Book Return:
+                                 <span class="text-danger">{{i.Expirydate}}</span><br>
+                                No.of Days Remaining :- 5 days ....<br>
+                                Fine Charged:=<span class="text-primary">0.00</span>
+                                    <br><label class="form-check-label" for="Check2">
+                                          Not Any Fine Pending.
+                                        </label>
+                                    <input class="form-check-input" type="checkbox" value="" id="Check2" required></p>
+
+
+                                <hr class="m-0">
+                                  <div class="col-12 form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" value="" id="Check1" required>
+                                        <label class="form-check-label" for="Check1">
+                                          Do you want to Return following Issued Book: <br>
+                                            Book Title : {{i.Book_Title}} (Id: {{i.Book_Id}})
+
+                                        </label>
+                                    </div>
+
+                                <div class="col-12 form-check mb-2 text-center">
+                                   <button type="button" class="btn btn-success mx-1" data-bs-dismiss="modal">Cancel</button>
+                                  <button class="btn btn-danger mx-1 " type="submit" value="Delete">Confirm Delete</button>
+                                </div><hr class="m-0">
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+                                 </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<h5 class="alert alert-danger">No Record found</h5>
+{% endif %}
+<div>
+    <a href="/" class="btn btn-success m-1 float-start" type="back"> Home </a>
+    <a href="issuebook" class="btn btn-danger float-start m-1">Issue More Books</a>
+</div>
+</div>
+ <script>
+
+ function verify(){
+ var d1 = new Date();
+var accessId=document.getElementById("access").value;
+if (accessId==''){
+  document.getElementById("alert").innerHTML="Access Verify Successful ! Now you can Proceed for Creating User ";
+  document.getElementById("alert").setAttribute("style", "color: green;");
+  document.getElementById("proceed").disabled = false;
+
+  }
+  else{
+  document.getElementById("alert").innerHTML="Access Verify failed ! Please Enter Vaild Access ID ";
+  document.getElementById("alert").setAttribute("style", "color: red;");
+  document.getElementById("proceed").disabled = true;
+  }
+}
+                                 function fine(){
+
+                                 var d1 = new Date();
+                                 var exp = document.getElementById("exp_date").value;
+                                 var d2 = new Date("exp");
+
+                                 var diff = d2.getTime() - d1.getTime();
+
+                                 var daydiff = diff / (1000 * 60 * 60 * 24);
+
+                                  document.write(" Total number of daysis:" + d1 + d2 + "days" );
+                                 document.getElementById("p1").innerHTML=" hello";
+                                                  }
+                                </script>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+{% extends 'Base_file.html' %}
+
+{% block title %} Member Records {% endblock title %}
+
+
+{% block body %}
+<div class="container border shadow-lg" style="background-color: rgb(231, 207, 203);">
+        <div class="row justify-content-center m-2 ">
+            <h5 class="my-2 alert fw-bold text-center text-white" style="background-color: tomato">
+                     Record Data of Registered Members </h5>
+            {% if messages %} {% for message in messages %}
+            {% if message.tags %}
+              <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                     <strong> {{message}} </strong>
+                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endif %}
+            {% endfor %} {% endif %}
+          <div class="col-4 mx-2">
+           <a  class="btn btn-danger" href="ViewMember">View All Member Records</a>
+          </div>
+        <div class="col-4">
+           <form method="get" action="searchmember" class="d-flex">
+        <input class="form-control me-2" type="search" name="searchmember" id="searchmember" placeholder="Search by Member name" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+           </form>
+        </div>
+
+        </div>
+                {% if Std %}
+                <hr>
+                <table class="table table-hover bg-light">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id Number</th>
+                            <th scope="col">Member Name</th>
+                            <th scope="col">Profession</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone_No</th>
+                            <th scope="col">Set_Username</th>
+                            <th scope="col">membership_plan</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for std in Std %}
+                        <tr>
+                            <th scope="row">{{std.Member_IdNumber}}</th>
+                            <td>{{std.Member_Name}}</td>
+                            <td>{{std.Profession}}</td>
+                            <td>{{std.Email}}</td>
+                            <td>{{std.Phone_No}}</td>
+                            <td>{{std.Set_Username}}</td>
+                            <td>{{std.membership_plan}}</td>
+                            <td>
+                                 <form action="{% url 'update' std.Member_IdNumber %}" method="post" class="d-inline"> {% csrf_token %}
+                                        <button class="btn btn-success btn-sm" type="submit" value="update">Update</button>
+                                 </form>
+                                 <form action="{% url 'delete' std.Member_IdNumber %}" method="post" class="d-inline"> {% csrf_token %}
+                                 <button type="button" value="Delete" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delete{{std.Member_IdNumber}}">
+                                          Delete
+                                 </button>
+                                     <!-- Modal & Static & centered & scrollable-->
+        <div class="modal fade" id="delete{{std.Member_IdNumber}}" data-bs-backdrop="static" data-bs-keyboard="false"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger">
+                        <h5 class="modal-title text-warning" id="staticBackdropLabel">Warning Alert </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <h5 class="text-danger"><strong>Warning</strong>: The following Record will be delete permanently </h5>
+
+
+                                <p>Please Agree below for deletion of Member Records.<br>
+                                   Member Name : {{std.Member_Name}} <br>
+                                    Member ID : {{std.Member_IdNumber}} </p>
+
+                                <hr>
+                                  <div class="col-12 form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" value="" id="Check1" required>
+                                        <label class="form-check-label" for="Check1">
+                                          Do you want to Delete following Record
+                                        </label>
+                                    </div>
+
+                                <div class="col-12 form-check mb-2 text-center">
+                                   <button type="button" class="btn btn-success mx-1" data-bs-dismiss="modal">Cancel</button>
+                                  <button class="btn btn-danger mx-1 " type="submit" value="Delete">Confirm Delete</button>
+                                </div><hr>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+                                 </form>
+                            </td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                 <h5 class="text-center alert alert-danger"> No Table Data </h5>
+                {% endif %}
+                <div class="float-center">
+                   <a href="/" class="btn btn-success m-1 float-start" type="back"> Home </a>
+                   <a href="RegisterStudent" class="btn btn-danger float-start m-1">Register New Member </a>
+                </div>
+
+</div>
+
+
+
+
+{% endblock body %}

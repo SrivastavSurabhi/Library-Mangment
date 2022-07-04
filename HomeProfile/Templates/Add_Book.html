@@ -1,0 +1,86 @@
+{% extends 'Base_file.html' %}
+
+{% block title %} Home {% endblock title %}
+
+{% block body %}
+
+     <div class="row justify-content-center">
+
+         <div class="col-md-6 bg-light">
+
+             <form method="POST" action="addbook" >
+                           {% csrf_token%}
+                                   <h5 class="my-2 alert fw-bold text-center text-white" style="background-color: tomato">
+                                        Add Particular Book in Records  </h5>
+                                        {% if messages %} {% for message in messages %}
+                                        {% if message.tags %}
+                                         <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                          <strong> {{message}} </strong>
+                                        <a href="viewbook" class="m-1 text-danger" type="back">  Show In Existing Book Records >></a>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                          {% endif %}
+                                       {% endfor %} {% endif %}
+
+                                    <div class="form-group">
+                                        <label for="Book_id" class="form-label">Book Id </label>
+                                        <input type="number" placeholder="BookId (4 digits )" id="Book_id" name="Book-id"
+                                               class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                         <label for="book_name" class="form-label">Book Title Name</label>
+                                        <input type="text" placeholder="Book Title" id="Book_name" name="book-title"
+                                               class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="book_author" class="form-label">Book Author Name</label>
+                                        <input type="text" placeholder="Author name" id="Book_author" name="book-author"
+                                               class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="book_ctg" class="form-label">Book Catergory</label>
+                                        <select id="Book_ctg" name="catergory"
+                                               class="form-select" required>
+                                               <option selected disabled value="">General Subject</option>
+                                               <option>Language</option>
+                                               <option>Literture</option>
+                                               <option>Novel & Frictions</option>
+                                               <option>Programming Lang-</option>
+                                               <option>Science Technology</option>
+                                               <option>Competions</option>
+                                               <option>Commerce&Banking</option>
+                                               <option>Other....</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="book_quantity" class="form-label">Required Quantity</label>
+                                        <input type="number" placeholder="No.of Books required " id="book_quantity" name="quantity"
+                                               class="form-control" required>
+                                    </div>
+                                    <br>
+                                    <div class="col-12 form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="Check1" required>
+                                        <label class="form-check-label" for="Check1">
+                                         Read Above detail Carefully before Adding a Book
+                                        </label>
+                                    </div>
+                                    <div class="row my-2 mx-1 p-1">
+                                        <div class="col-4 text-start">
+                                            <a href="/" class="btn btn-success m-1 float-start" type="back"> Back</a>
+                                        </div>
+                                        <div class="col-8 text-end">
+                                            <button class="btn btn-primary m-1 float-end" type="submit">Submit form</button>
+                                        </div>
+                                    </div>
+
+
+
+             </form>
+         </div>
+     </div>
+
+{% endblock body %}
+
+
+
+

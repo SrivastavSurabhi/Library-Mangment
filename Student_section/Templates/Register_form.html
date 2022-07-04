@@ -1,0 +1,49 @@
+{% extends 'Base_file.html' %}
+
+{% block title %} Member Registration {% endblock title %}
+
+
+{% block body %}
+
+   <div class="container shadow-lg">
+       {% if messages %} {% for message in messages %}
+                                        {% if message.tags %}
+                                         <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                          <strong> {{message}} </strong>
+                                             <a class="m-1" href="ViewMember"> Show In Existing Member Records </a>
+                                           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                          {% endif %}
+                                       {% endfor %} {% endif %}
+        <div class="row justify-content-center">
+            <div class="col-sm-6 bg-light">
+                 <h5 class="my-2 alert fw-bold text-center text-white" style="background-color: tomato">
+                     Register New Member/person</h5>
+
+                <form action="RegisterStudent" method="post">
+                    <h3> Enter Member Details:</h3>
+                    {% csrf_token %}
+                    {{form.as_p}}
+
+                    <div class="col-12 form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="Check1" required>
+                        <label class="form-check-label" for="Check1">
+                            Read Above detail Carefully before Register New Member
+                        </label>
+                    </div>
+
+                    <div class="row my-2 mx-1 p-1">
+                        <div class="col-4 text-start">
+                            <a href="/" class="btn btn-success m-1 float-start" type="back"> Back</a>
+                        </div>
+                        <div class="col-8 text-end">
+                            <button class="btn btn-primary m-1 float-end" type="submit">Submit form</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+   </div>
+
+{% endblock body %}
